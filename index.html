@@ -1,0 +1,76 @@
+<html>
+
+<head>
+
+<title>Censys certificate detail CTlogID translator WebConsoleScript/Bookmarklet</title>
+
+<style>
+<!--
+
+body {background-color:rgb(255,174,201);}
+
+h1 {text-align:center;}
+
+p {text-indent:1em;}
+
+-->
+</style>
+
+<script>
+<!--
+
+function genBookmarklet(){
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'test.js?cachebuster='+(new Date()).getTime() );
+  xhr.onreadystatechange = function () {
+    resultA.href = 'javascript:(function(){' + xhr.responseText.replace(/\n/g,'') + '})();';
+    resultA.innerHTML = 'Generated Link';
+    copyToClipboardA.href = 'javascript:copyToClipboard(resultA.href)';
+    copyToClipboardA.innerHTML = 'Copy to clipboard';
+    resultPre.innerText = 'javascript:(function(){' + xhr.responseText.replace(/\n/g,'') + '})();';
+  };
+  xhr.send(null);
+};
+
+function copyToClipboard(str){
+  if(confirm("Are you ready to copy? This command writes URI to clipboard directly.")){
+  var listener = function(e){
+    e.clipboardData.setData("text/plain" , str);
+    e.preventDefault();
+    document.removeEventListener("copy", listener);
+  };
+  document.addEventListener("copy" , listener);
+  document.execCommand("copy");
+  prompt("URI has been copied to clipboard directly. DO NOT copy following data additionally.",str);
+  };
+};
+
+-->
+</script>
+
+</head>
+
+<body>
+
+<h1>Censys certificate detail CTlogID translator WebConsoleScript/Bookmarklet</h1>
+
+  <p>Source on GitHub is 
+    <a href="https://github.com/testtlnls/censysCertDetailCTLogIDtranslator/blob/master/main.js">here</a> 
+    or raw is 
+    <a href="main.js">here</a> 
+    (<a href="main.js" download="main.js">download</a>).
+  </p>
+
+<h2>Bookmarklet version</h2>
+
+  <p>To generate bookmarklet version, please <a onclick="genBookmarklet()" href='javascript:void(0)'>click</a> here. 
+    Then, generated link will appear in the following.</p>
+
+  <div><a id='resultA' href='#'>Not yet generated.</a></div>
+  <div><a id='copyToClipboardA' href='#'>Not yet generated.</a></div>
+
+<pre id='resultPre'></pre>
+
+</body>
+
+</html>
